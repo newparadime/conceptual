@@ -15,8 +15,8 @@ LDLIBS=-l($(libmain).a)
 
 all: $(libmain).a $(libmain).so $(binmain)
 
-$(libmain).a: $(libmain)($(obj))
-	$(AR) c $(ARFLAGS) $@ $%
+$(libmain).a: $(libmain).a($(obj))
+	#$(AR) c $(ARFLAGS) $@ $%
 
 $(libmain).so: $(obj)
 	$(CC) -shared $(LDFLAGS) -o $@ $^

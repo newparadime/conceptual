@@ -1,5 +1,5 @@
 #include <stdint.h>
-
+#include <stddef.h>
 #define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
 
 #define final(a,b,c) \
@@ -66,7 +66,7 @@ size_t        numBytes)               /* the length of the key, in uint32_ts */
     { 
     case 2 : c+=k[1];
     case 1 : b+=k[0];
-    case 0 : last;
+    case 0 : a+=last;
         final(a,b,c);
     }
     /*------------------------------------------------------ report the result */
