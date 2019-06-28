@@ -9,19 +9,18 @@ obj=$(src:%.c=%.o)
 ARFLAGS=ru
 CFLAGS=-ggdb -O3 -fPIC -Wall -Werror -pedantic
 
-LDLIBS=-l($(libmain).a)
-
+LDLIBS=-l:$(libmain).a
+LDFLAGS=-L.
 .PHONY: $(libmain).a $(libmain).so $(binmain) clean all
 
 all: $(libmain).a $(libmain).so $(binmain)
 
 $(libmain).a: $(libmain).a($(obj))
-	#$(AR) c $(ARFLAGS) $@ $%
 
 $(libmain).so: $(obj)
 	$(CC) -shared $(LDFLAGS) -o $@ $^
 
 $(binmain): $(objmain)
-
+	$(CC) $(CFLAGS) $(CPPFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
 clean:
-	$(RM) $(obj) $(objmain)
+	$(RM) $(obj) $(objmain) $(libmain).a $(libmain).so $(binmain)
