@@ -1,5 +1,6 @@
-#include <stdint.h>
 #include <stddef.h>
+#include "hashword.h"
+
 #define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
 
 #define final(a,b,c) \
@@ -24,7 +25,7 @@
 }
 
 uint32_t hashword(
-const uint8_t *bytes,                   /* the key, an array of uint32_t values */
+const char *bytes,                   /* the key, an array of uint32_t values */
 size_t        numBytes)               /* the length of the key, in uint32_ts */
 {
     uint32_t a,b,c;
@@ -45,7 +46,7 @@ size_t        numBytes)               /* the length of the key, in uint32_ts */
         last = 0x0;
         while(numBytes % sizeof(uint32_t))
         {
-            last |= bytes[numBytes-1] << (((numBytes % sizeof(uint32_t))-1) * sizeof(uint8_t));
+            last |= bytes[numBytes-1] << (((numBytes % sizeof(uint32_t))-1) * sizeof(char));
             numBytes -= 1;
         }
     }
@@ -70,6 +71,6 @@ size_t        numBytes)               /* the length of the key, in uint32_ts */
         final(a,b,c);
     }
     /*------------------------------------------------------ report the result */
-    initval = c;
+    //initval = c;
     return c;
 }
